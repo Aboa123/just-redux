@@ -1,33 +1,38 @@
-import { createStore } from 'redux';
+import { createStore,combineReducers } from 'redux';
+import { createAction, createReducer, configureStore } from '@reduxjs/toolkit';
+import { v4 } from 'uuid'
 
-const ADD = "ADD";
-const DEL = "DEL";
+const addTodoA = createAction("ADD");
+const delTodoA = createAction("DEL");
 
-const addTodo = (text) => {
-    return { type:ADD, text };
-}
+const addTodoB = createAction("ADD");
+const delTodoB = createAction("DEL");
 
-const delTodo = (id) => {
-    return { type:DEL, id:parseInt(id) };
-}
+const toDoA = createReducer([],{
+    [addTodoA]: (state = { toDoA: [] }, action) => {
+        state.push({ text: action.payload, id: v4() })
+    },
+    [delTodoA]: (state, action) => state.filter(item => item.id !== action.payload)
+});
 
-const reducer = (state = [], action) => {
-    switch(action.type)
-    {
-        case ADD:
-            return [ { text: action.text, id: Date.now() }, ...state ];
-        case DEL:
-            return state.filter(item => item.id !== action.id);
-        default:
-            return state;
-    }
-}
+const toDoB = createReducer([],{
+    [addTodoB]: (state = { toDoB: [] }, action) => {
+        state.push({ text: action.payload, id: v4() })
+    },
+    [delTodoB]: (state, action) => state.filter(item => item.id !== action.payload)
+});
 
-const store = createStore(reducer);
+const reducer = combineReducers({
+    toDoA,
+    toDoB
+})
+const store = configureStore({ reducer });
 
 export const actionCreator = {
-    addTodo,
-    delTodo
+    addTodoA,
+    delTodoA,
+    addTodoB,
+    delTodoB,
 }
 
 export default store;
