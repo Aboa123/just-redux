@@ -1,21 +1,21 @@
 import React, {  } from 'react';
 import { connect } from 'react-redux';
-import { actionCreator } from '../store';
+import { delA, delB } from '../store';
 import { Link } from 'react-router-dom';
 
-function Todo({Ltype, text, delTodoA, delTodoB, id}) {
+function Todo({Ltype, text, delA, delB, id}) {
     return (
         <li>
             <Link to={`/${id}`}>{text}</Link>
-            <button onClick={Ltype === "A" ? delTodoA : delTodoB}>DEL</button>
+            <button onClick={Ltype === "A" ? delA : delB}>DEL</button>
         </li>
     )
 }
 
 function mapDispatchProps(dispatch, ownProps) {
     return {
-        delTodoA: () => dispatch(actionCreator.delTodoA(ownProps.id)),
-        delTodoB: () => dispatch(actionCreator.delTodoB(ownProps.id))
+        delA: () => dispatch(delA(ownProps.id)),
+        delB: () => dispatch(delB(ownProps.id))
     }
 }
 

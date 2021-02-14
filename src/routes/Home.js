@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { actionCreator } from '../store';
+import { addA, addB } from '../store';
 import Todo from '../components/Todo';
 
-function Home({ toDosA, addTodoA, toDosB, addTodoB }) {
+function Home({ toDosA, addA, toDosB, addB }) {
     const [textA,setTextA] = useState();
     const [textB,setTextB] = useState();
     function onChangeA(e) {
@@ -11,7 +11,7 @@ function Home({ toDosA, addTodoA, toDosB, addTodoB }) {
     }
     function onSubmitA(e) {
         e.preventDefault();
-        addTodoA(textA)
+        addA(textA)
         setTextA("");
     }
     function onChangeB(e) {
@@ -19,7 +19,7 @@ function Home({ toDosA, addTodoA, toDosB, addTodoB }) {
     }
     function onSubmitB(e) {
         e.preventDefault();
-        addTodoB(textB)
+        addB(textB)
         setTextB("");
     }
     return (
@@ -58,8 +58,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        addTodoA: (text) => dispatch(actionCreator.addTodoA(text)),
-        addTodoB: (text) => dispatch(actionCreator.addTodoB(text))
+        addA: (text) => dispatch(addA(text)),
+        addB: (text) => dispatch(addB(text))
     };
 }
 
